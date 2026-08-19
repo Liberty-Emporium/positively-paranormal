@@ -15,11 +15,11 @@
 <body>
     {% if user.is_authenticated %}
     <header class="top-bar">
-        <a href="{% url 'dashboard' %}" class="logo">👻 PP</a>
+        <a href="{% url 'investigator:dashboard' %}" class="logo">👻 PP</a>
         <nav class="top-nav">
-            <a href="{% url 'dashboard' %}">Dashboard</a>
-            <a href="{% url 'case_list' %}">Cases</a>
-            <a href="{% url 'case_create' %}">New Case</a>
+            <a href="{% url 'investigator:dashboard' %}">Dashboard</a>
+            <a href="{% url 'investigator:case_list' %}">Cases</a>
+            <a href="{% url 'investigator:case_create' %}">New Case</a>
         </nav>
         <div class="user-menu">
             <span class="username">{{ user.username }}</span>

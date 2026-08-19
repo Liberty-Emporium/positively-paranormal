@@ -3,7 +3,7 @@
 {% block content %}
 <div class="dash-header">
     <h2>Investigator Dashboard</h2>
-    <a href="{% url 'case_create' %}" class="btn btn-primary">+ New Case</a>
+    <a href="{% url 'investigator:case_create' %}" class="btn btn-primary">+ New Case</a>
 </div>
 
 <div class="stats-row">
@@ -25,7 +25,7 @@
 {% if cases %}
 <div class="case-grid">
     {% for case in cases %}
-    <a href="{% url 'case_detail' case.pk %}" class="case-card">
+    <a href="{% url 'investigator:case_detail' case.pk %}" class="case-card">
         <h4>{{ case.title }}</h4>
         <span class="badge {{ case.status }}">{{ case.get_status_display }}</span>
         <span class="badge classification">{{ case.get_classification_display }}</span>
@@ -39,7 +39,7 @@
 {% else %}
 <div class="empty-state">
     <p>No cases yet. Start your first investigation!</p>
-    <a href="{% url 'case_create' %}" class="btn btn-primary">Create Case</a>
+    <a href="{% url 'investigator:case_create' %}" class="btn btn-primary">Create Case</a>
 </div>
 {% endif %}
 

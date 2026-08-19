@@ -3,13 +3,13 @@
 {% block content %}
 <div class="page-header">
     <h2>Your Cases</h2>
-    <a href="{% url 'case_create' %}" class="btn btn-primary">+ New Case</a>
+    <a href="{% url 'investigator:case_create' %}" class="btn btn-primary">+ New Case</a>
 </div>
 
 {% if cases %}
 <div class="case-grid">
     {% for case in cases %}
-    <a href="{% url 'case_detail' case.pk %}" class="case-card">
+    <a href="{% url 'investigator:case_detail' case.pk %}" class="case-card">
         <h4>{{ case.title }}</h4>
         <div class="case-meta">
             <span class="badge {{ case.status }}">{{ case.get_status_display }}</span>
@@ -25,7 +25,7 @@
 {% else %}
 <div class="empty-state">
     <p>No cases yet.</p>
-    <a href="{% url 'case_create' %}" class="btn btn-primary">Start a Case</a>
+    <a href="{% url 'investigator:case_create' %}" class="btn btn-primary">Start a Case</a>
 </div>
 {% endif %}
 {% endblock %}

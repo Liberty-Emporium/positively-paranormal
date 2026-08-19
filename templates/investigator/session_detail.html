@@ -4,7 +4,7 @@
 <div class="page-header">
     <h2>{{ session.title }}</h2>
     <div class="header-actions">
-        <form method="post" action="{% url 'session_end' case.pk session.pk %}" style="display:inline">
+        <form method="post" action="{% url 'investigator:session_end' case.pk session.pk %}" style="display:inline">
             {% csrf_token %}
             <button type="submit" class="btn btn-danger">🔴 End Session</button>
         </form>
@@ -12,7 +12,7 @@
 </div>
 
 <div class="session-info">
-    <p><strong>Case:</strong> <a href="{% url 'case_detail' case.pk %}">{{ case.title }}</a></p>
+    <p><strong>Case:</strong> <a href="{% url 'investigator:case_detail' case.pk %}">{{ case.title }}</a></p>
     <p><strong>Started:</strong> {{ session.started_at|date:"M j, Y g:i A" }}</p>
     {% if session.ended_at %}
     <p><strong>Ended:</strong> {{ session.ended_at|date:"M j, Y g:i A" }}</p>
@@ -26,9 +26,9 @@
 </div>
 
 <div class="tool-bar">
-    <a href="{% url 'evp_recorder' case.pk session.pk %}" class="tool-btn">🎙️ EVP Recorder</a>
-    <a href="{% url 'emf_meter' case.pk session.pk %}" class="tool-btn">📡 EMF Meter</a>
-    <a href="{% url 'evidence_upload' case.pk session.pk %}" class="tool-btn">📷 Upload Evidence</a>
+    <a href="{% url 'investigator:evp_recorder' case.pk session.pk %}" class="tool-btn">🎙️ EVP Recorder</a>
+    <a href="{% url 'investigator:emf_meter' case.pk session.pk %}" class="tool-btn">📡 EMF Meter</a>
+    <a href="{% url 'investigator:evidence_upload' case.pk session.pk %}" class="tool-btn">📷 Upload Evidence</a>
 </div>
 
 {% if evp_sessions %}

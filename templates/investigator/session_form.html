@@ -16,6 +16,6 @@
         <textarea name="notes" rows="4" placeholder="Initial conditions, equipment setup, team members..."></textarea>
     </div>
     <button type="submit" class="btn btn-primary">Start Session</button>
-    <a href="{% url 'case_detail' case.pk %}" class="btn btn-secondary">Cancel</a>
+    <a href="{% url 'investigator:case_detail' case.pk %}" class="btn btn-secondary">Cancel</a>
 </form>
 {% endblock %}

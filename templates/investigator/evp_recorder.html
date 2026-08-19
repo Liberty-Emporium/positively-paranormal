@@ -6,7 +6,7 @@
 {% block content %}
 <div class="page-header">
     <h2>🎙️ EVP Recorder</h2>
-    <a href="{% url 'session_detail' case.pk session.pk %}" class="btn btn-secondary">Back</a>
+    <a href="{% url 'investigator:session_detail' case.pk session.pk %}" class="btn btn-secondary">Back</a>
 </div>
 
 <div class="tool-container">
@@ -78,7 +78,7 @@
 window.EVP_CONFIG = {
     casePk: {{ case.pk }},
     sessionPk: {{ session.pk }},
-    saveUrl: "{% url 'evp_save' case.pk session.pk %}"
+    saveUrl: "{% url 'investigator:evp_save' case.pk session.pk %}"
 };
 </script>
 <script src="{% static 'js/evp-recorder.js' %}"></script>

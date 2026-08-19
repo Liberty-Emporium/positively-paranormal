@@ -4,7 +4,7 @@
 <div class="page-header">
     <h2>{{ case.title }}</h2>
     <div class="header-actions">
-        <a href="{% url 'session_create' case.pk %}" class="btn btn-primary">+ New Session</a>
+        <a href="{% url 'investigator:session_create' case.pk %}" class="btn btn-primary">+ New Session</a>
     </div>
 </div>
 
@@ -37,7 +37,7 @@
 <div class="session-list">
     {% for session in sessions %}
     <div class="session-card">
-        <a href="{% url 'session_detail' case.pk session.pk %}" class="session-link">
+        <a href="{% url 'investigator:session_detail' case.pk session.pk %}" class="session-link">
             <h4>{{ session.title }}</h4>
             <p>{{ session.started_at|date:"M j, Y g:i A" }}</p>
             {% if session.ended_at %}
@@ -47,9 +47,9 @@
             {% endif %}
         </a>
         <div class="session-tools">
-            <a href="{% url 'evp_recorder' case.pk session.pk %}" class="btn-sm">🎙️ EVP</a>
-            <a href="{% url 'emf_meter' case.pk session.pk %}" class="btn-sm">📡 EMF</a>
-            <a href="{% url 'evidence_upload' case.pk session.pk %}" class="btn-sm">📷 Evidence</a>
+            <a href="{% url 'investigator:evp_recorder' case.pk session.pk %}" class="btn-sm">🎙️ EVP</a>
+            <a href="{% url 'investigator:emf_meter' case.pk session.pk %}" class="btn-sm">📡 EMF</a>
+            <a href="{% url 'investigator:evidence_upload' case.pk session.pk %}" class="btn-sm">📷 Evidence</a>
         </div>
     </div>
     {% endfor %}

@@ -3,7 +3,7 @@
 {% block content %}
 <div class="page-header">
     <h2>📷 Upload Evidence</h2>
-    <a href="{% url 'session_detail' case.pk session.pk %}" class="btn btn-secondary">Back</a>
+    <a href="{% url 'investigator:session_detail' case.pk session.pk %}" class="btn btn-secondary">Back</a>
 </div>
 
 <form method="post" enctype="multipart/form-data" class="pp-form">
