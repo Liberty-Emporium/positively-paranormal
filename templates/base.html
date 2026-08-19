@@ -23,7 +23,7 @@
         </nav>
         <div class="user-menu">
             <span class="username">{{ user.username }}</span>
-            <a href="{% url 'logout' %}" class="btn-sm">Logout</a>
+            <a href="{% url 'accounts:logout' %}" class="btn-sm">Logout</a>
         </div>
     </header>
     {% endif %}
