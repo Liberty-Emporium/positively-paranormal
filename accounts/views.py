@@ -11,7 +11,7 @@ def register(request):
             user = form.save()
             login(request, user)
             messages.success(request, f'Welcome Investigator {user.username}!')
-            return redirect('dashboard')
+            return redirect('investigator:dashboard')
     else:
         form = UserCreationForm()
     return render(request, 'accounts/register.html', {'form': form})
