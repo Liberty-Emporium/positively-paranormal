@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="page-header">
+    <h2>{% if case %}New Session: {{ case.title }}{% else %}New Session{% endif %}</h2>
+</div>
+
+<form method="post" class="pp-form">
+    {% csrf_token %}
+    <div class="form-group">
+        <label>Session Title</label>
+        <input type="text" name="title" placeholder="e.g., Night 1 — Basement Sweep" value="Session {{ case.sessions.all|length|add:1|default:1 }}">
+    </div>
+    <div class="form-group">
+        <label>Notes</label>
+        <textarea name="notes" rows="4" placeholder="Initial conditions, equipment setup, team members..."></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Start Session</button>
+    <a href="{% url 'case_detail' case.pk %}" class="btn btn-secondary">Cancel</a>
+</form>
+{% endblock %}

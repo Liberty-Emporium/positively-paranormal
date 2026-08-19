@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="page-header">
+    <h2>📷 Upload Evidence</h2>
+    <a href="{% url 'session_detail' case.pk session.pk %}" class="btn btn-secondary">Back</a>
+</div>
+
+<form method="post" enctype="multipart/form-data" class="pp-form">
+    {% csrf_token %}
+    <div class="form-group">
+        <label>Title</label>
+        <input type="text" name="title" required placeholder="e.g., Shadow in hallway photo">
+    </div>
+    <div class="form-group">
+        <label>Type</label>
+        <select name="evidence_type">
+            <option value="photo">📷 Photograph</option>
+            <option value="video">🎥 Video</option>
+            <option value="audio">🎙️ Audio Recording</option>
+            <option value="document">📄 Document</option>
+            <option value="screenshot">📱 Screenshot</option>
+            <option value="other">❓ Other</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label>Description</label>
+        <textarea name="description" rows="3" placeholder="Describe what was captured..."></textarea>
+    </div>
+    <div class="form-group">
+        <label>File</label>
+        <input type="file" name="file" accept="image/*,video/*,audio/*">
+    </div>
+    <button type="submit" class="btn btn-primary">Upload Evidence</button>
+</form>
+{% endblock %}

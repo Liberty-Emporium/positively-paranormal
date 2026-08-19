@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="dash-header">
+    <h2>Investigator Dashboard</h2>
+    <a href="{% url 'case_create' %}" class="btn btn-primary">+ New Case</a>
+</div>
+
+<div class="stats-row">
+    <div class="stat-card">
+        <span class="stat-number">{{ case_count }}</span>
+        <span class="stat-label">Total Cases</span>
+    </div>
+    <div class="stat-card">
+        <span class="stat-number">{{ open_cases }}</span>
+        <span class="stat-label">Open</span>
+    </div>
+    <div class="stat-card">
+        <span class="stat-number">{{ active_cases }}</span>
+        <span class="stat-label">Active</span>
+    </div>
+</div>
+
+<h3>Your Cases</h3>
+{% if cases %}
+<div class="case-grid">
+    {% for case in cases %}
+    <a href="{% url 'case_detail' case.pk %}" class="case-card">
+        <h4>{{ case.title }}</h4>
+        <span class="badge {{ case.status }}">{{ case.get_status_display }}</span>
+        <span class="badge classification">{{ case.get_classification_display }}</span>
+        {% if case.location_name %}
+        <p class="case-location">{{ case.location_name }}</p>
+        {% endif %}
+        <p class="case-date">{{ case.updated_at|date:"M j, Y" }}</p>
+    </a>
+    {% endfor %}
+</div>
+{% else %}
+<div class="empty-state">
+    <p>No cases yet. Start your first investigation!</p>
+    <a href="{% url 'case_create' %}" class="btn btn-primary">Create Case</a>
+</div>
+{% endif %}
+
+{% if recent_evps %}
+<h3>Recent EVP Hits</h3>
+<div class="evp-list">
+    {% for evp in recent_evps %}
+    <div class="evp-item">
+        <span class="evp-icon">👁️</span>
+        <div>
+            <strong>{{ evp.title }}</strong>
+            <p>{{ evp.session.case.title }} — {{ evp.timestamp|date:"M j, Y g:i A" }}</p>
+            {% if evp.evp_transcript %}
+            <p class="evp-transcript">"{{ evp.evp_transcript }}"</p>
+            {% endif %}
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+{% endblock %}

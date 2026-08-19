@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="page-header">
+    <h2>{% if case %}Edit Case{% else %}New Case{% endif %}</h2>
+</div>
+
+<form method="post" class="pp-form">
+    {% csrf_token %}
+    <div class="form-group">
+        <label>Case Title *</label>
+        <input type="text" name="title" required placeholder="e.g., Whispers at Willow Manor">
+    </div>
+    <div class="form-group">
+        <label>Description</label>
+        <textarea name="description" rows="4" placeholder="Describe the location, reported phenomena, witnesses..."></textarea>
+    </div>
+    <div class="form-group">
+        <label>Location Name</label>
+        <input type="text" name="location_name" placeholder="e.g., Willow Manor, 1313 Baker Street">
+    </div>
+    <div class="form-group">
+        <label>Address</label>
+        <textarea name="address" rows="2" placeholder="Full address if known"></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Save Case</button>
+    <a href="{% url 'case_list' %}" class="btn btn-secondary">Cancel</a>
+</form>
+{% endblock %}

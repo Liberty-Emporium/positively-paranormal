@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="page-header">
+    <h2>{{ session.title }}</h2>
+    <div class="header-actions">
+        <form method="post" action="{% url 'session_end' case.pk session.pk %}" style="display:inline">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">🔴 End Session</button>
+        </form>
+    </div>
+</div>
+
+<div class="session-info">
+    <p><strong>Case:</strong> <a href="{% url 'case_detail' case.pk %}">{{ case.title }}</a></p>
+    <p><strong>Started:</strong> {{ session.started_at|date:"M j, Y g:i A" }}</p>
+    {% if session.ended_at %}
+    <p><strong>Ended:</strong> {{ session.ended_at|date:"M j, Y g:i A" }}</p>
+    <p><strong>Duration:</strong> {{ session.started_at|timesince:session.ended_at }}</p>
+    {% else %}
+    <p><strong>Status:</strong> <span class="badge active_investigation">LIVE</span></p>
+    {% endif %}
+    {% if session.notes %}
+    <p>{{ session.notes }}</p>
+    {% endif %}
+</div>
+
+<div class="tool-bar">
+    <a href="{% url 'evp_recorder' case.pk session.pk %}" class="tool-btn">🎙️ EVP Recorder</a>
+    <a href="{% url 'emf_meter' case.pk session.pk %}" class="tool-btn">📡 EMF Meter</a>
+    <a href="{% url 'evidence_upload' case.pk session.pk %}" class="tool-btn">📷 Upload Evidence</a>
+</div>
+
+{% if evp_sessions %}
+<h3>EVP Recordings ({{ evp_sessions|length }})</h3>
+<div class="evp-list">
+    {% for evp in evp_sessions %}
+    <div class="evp-item">
+        <span class="evp-icon">🎙️</span>
+        <div>
+            <strong>{{ evp.title }}</strong> — {{ evp.duration_seconds }}s
+            {% if evp.has_potential_evp %}
+            <span class="badge evp-hit">👁️ EVP</span>
+            {% endif %}
+            <p>{{ evp.timestamp|date:"g:i A" }}</p>
+            {% if evp.evp_transcript %}
+            <p class="evp-transcript">"{{ evp.evp_transcript }}"</p>
+            {% endif %}
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+
+{% if emf_readings %}
+<h3>EMF Readings ({{ emf_readings|length }})</h3>
+<div class="reading-grid">
+    {% for reading in emf_readings %}
+    <div class="reading-card">
+        <span class="emf-level">{{ reading.level_mg }} <small>mG</small></span>
+        {% if reading.location_description %}
+        <p>{{ reading.location_description }}</p>
+        {% endif %}
+        <p class="timestamp">{{ reading.timestamp|date:"g:i:s A" }}</p>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+
+{% if evidence %}
+<h3>Evidence ({{ evidence|length }})</h3>
+<div class="evidence-grid">
+    {% for item in evidence %}
+    <div class="evidence-card">
+        <span class="ev-type">{{ item.get_evidence_type_display }}</span>
+        <strong>{{ item.title }}</strong>
+        <span class="badge {{ item.classification }}">{{ item.get_classification_display }}</span>
+        <p>{{ item.timestamp|date:"M j, g:i A" }}</p>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+
+{% if motion_events %}
+<h3>Motion Events ({{ motion_events|length }})</h3>
+{% for event in motion_events %}
+<div class="motion-event">
+    <span class="motion-icon">📳</span>
+    <div>
+        <strong>{{ event.sensor_type }}</strong>
+        {% if event.trigger_value %}({{ event.trigger_value }}){% endif %}
+        <p>{{ event.timestamp|date:"g:i:s A" }}</p>
+    </div>
+</div>
+{% endfor %}
+{% endif %}
+{% endblock %}

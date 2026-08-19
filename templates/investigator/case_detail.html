@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="page-header">
+    <h2>{{ case.title }}</h2>
+    <div class="header-actions">
+        <a href="{% url 'session_create' case.pk %}" class="btn btn-primary">+ New Session</a>
+    </div>
+</div>
+
+<div class="case-info">
+    <div class="case-badges">
+        <span class="badge {{ case.status }}">{{ case.get_status_display }}</span>
+        <span class="badge classification">{{ case.get_classification_display }}</span>
+    </div>
+    {% if case.location_name %}
+    <p><strong>📍 Location:</strong> {{ case.location_name }}</p>
+    {% endif %}
+    {% if case.description %}
+    <p>{{ case.description }}</p>
+    {% endif %}
+    {% if case.electromagnetic_baseline %}
+    <p><strong>EMF Baseline:</strong> {{ case.electromagnetic_baseline }} mG</p>
+    {% endif %}
+    <p><strong>Created:</strong> {{ case.created_at|date:"M j, Y" }}</p>
+</div>
+
+<div class="stats-row">
+    <div class="stat-card"><span class="stat-number">{{ sessions|length }}</span><span class="stat-label">Sessions</span></div>
+    <div class="stat-card"><span class="stat-number">{{ evp_count }}</span><span class="stat-label">EVP</span></div>
+    <div class="stat-card"><span class="stat-number">{{ emf_count }}</span><span class="stat-label">EMF Readings</span></div>
+    <div class="stat-card"><span class="stat-number">{{ evidence_count }}</span><span class="stat-label">Evidence</span></div>
+</div>
+
+<h3>Investigation Sessions</h3>
+{% if sessions %}
+<div class="session-list">
+    {% for session in sessions %}
+    <div class="session-card">
+        <a href="{% url 'session_detail' case.pk session.pk %}" class="session-link">
+            <h4>{{ session.title }}</h4>
+            <p>{{ session.started_at|date:"M j, Y g:i A" }}</p>
+            {% if session.ended_at %}
+            <p>⏱️ {{ session.started_at|timesince:session.ended_at }}</p>
+            {% else %}
+            <span class="badge active_investigation">In Progress</span>
+            {% endif %}
+        </a>
+        <div class="session-tools">
+            <a href="{% url 'evp_recorder' case.pk session.pk %}" class="btn-sm">🎙️ EVP</a>
+            <a href="{% url 'emf_meter' case.pk session.pk %}" class="btn-sm">📡 EMF</a>
+            <a href="{% url 'evidence_upload' case.pk session.pk %}" class="btn-sm">📷 Evidence</a>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<p>No sessions yet. Start one!</p>
+{% endif %}
+{% endblock %}

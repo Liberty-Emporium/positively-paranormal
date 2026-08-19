@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}EVP Recorder — {{ session.title }}{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h2>🎙️ EVP Recorder</h2>
+    <a href="{% url 'session_detail' case.pk session.pk %}" class="btn btn-secondary">Back</a>
+</div>
+
+<div class="tool-container">
+    <div class="evp-controls">
+        <button id="recordBtn" class="btn btn-lg btn-record">🔴 Start Recording</button>
+        <div class="recording-status" id="recordingStatus">Ready</div>
+        <div class="timer" id="timer">00:00</div>
+    </div>
+
+    <div class="evp-visualizer" id="visualizer">
+        <canvas id="waveform"></canvas>
+    </div>
+
+    <div class="evp-params">
+        <div class="form-group">
+            <label>Recorder Location</label>
+            <input type="text" id="recorderLocation" placeholder="e.g., Basement, Northeast corner">
+        </div>
+        <div class="form-group">
+            <label>Current EMF (mG)</label>
+            <input type="number" id="emfAtRecording" step="0.01" placeholder="0.00">
+        </div>
+        <div class="form-group">
+            <label>Temperature (°F)</label>
+            <input type="number" id="tempAtRecording" step="0.1" placeholder="68.0">
+        </div>
+    </div>
+
+    <div class="playback-section">
+        <h3>Playback Controls</h3>
+        <button id="playBtn" class="btn btn-secondary" disabled>▶️ Play</button>
+        <button id="reverseBtn" class="btn btn-secondary" disabled>🔁 Reverse</button>
+        <button id="speedBtn" class="btn btn-secondary" disabled>1.0x</button>
+        <div class="form-group">
+            <label>Notes</label>
+            <textarea id="evpNotes" rows="3" placeholder="Any observations during recording..."></textarea>
+        </div>
+        <div class="form-group">
+            <label>Did you hear anything?</label>
+            <input type="text" id="evpTranscript" placeholder="What did the EVP say?">
+        </div>
+        <div class="checkbox-group">
+            <input type="checkbox" id="hasEvp">
+            <label for="hasEvp">Potential EVP detected</label>
+        </div>
+        <button id="saveEvpBtn" class="btn btn-primary">💾 Save Recording</button>
+    </div>
+</div>
+
+<div class="session-readings" id="recentReadings">
+    <h3>Recent EVP Sessions</h3>
+    {% if session.evp_sessions.all %}
+    {% for evp in session.evp_sessions.all %}
+    <div class="evp-item">
+        <span class="evp-icon">🎙️</span>
+        <div>
+            <strong>{{ evp.title }}</strong> — {{ evp.duration_seconds }}s
+            {% if evp.has_potential_evp %}<span class="badge evp-hit">👁️</span>{% endif %}
+            <p>{{ evp.timestamp|date:"g:i A" }}</p>
+        </div>
+    </div>
+    {% endfor %}
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+window.EVP_CONFIG = {
+    casePk: {{ case.pk }},
+    sessionPk: {{ session.pk }},
+    saveUrl: "{% url 'evp_save' case.pk session.pk %}"
+};
+</script>
+<script src="{% static 'js/evp-recorder.js' %}"></script>
+{% endblock %}

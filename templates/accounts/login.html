@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="auth-container">
+    <div class="auth-card">
+        <h2>👻 Sign In</h2>
+        <form method="post" class="pp-form">
+            {% csrf_token %}
+            <div class="form-group">
+                <label>Username</label>
+                <input type="text" name="username" required>
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" name="password" required>
+            </div>
+            {% if form.errors %}
+            <p class="error">Invalid credentials. Try again.</p>
+            {% endif %}
+            <button type="submit" class="btn btn-primary">Sign In</button>
+        </form>
+        <p class="auth-link">New investigator? <a href="{% url 'register' %}">Register</a></p>
+    </div>
+</div>
+{% endblock %}

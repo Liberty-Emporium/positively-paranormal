@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<section class="hero">
+    <div class="hero-icon">👻</div>
+    <h1>Positively Paranormal</h1>
+    <p class="subtitle">Professional Paranormal Investigation Toolkit</p>
+    <p class="desc">Record EVP, measure EMF, track motion, log evidence — all from your phone.</p>
+
+    <div class="hero-actions">
+        {% if user.is_authenticated %}
+        <a href="{% url 'dashboard' %}" class="btn btn-primary">Enter Dashboard</a>
+        {% else %}
+        <a href="{% url 'login' %}" class="btn btn-primary">Sign In</a>
+        <a href="{% url 'register' %}" class="btn btn-secondary">Register</a>
+        {% endif %}
+    </div>
+</section>
+
+<section class="features">
+    <div class="feature-card">
+        <div class="feature-icon">🎙️</div>
+        <h3>EVP Recorder</h3>
+        <p>Record audio and analyze for electronic voice phenomena. Play back in reverse, filter noise.</p>
+    </div>
+    <div class="feature-card">
+        <div class="feature-icon">📡</div>
+        <h3>EMF Meter</h3>
+        <p>Use your phone's magnetometer to detect electromagnetic field fluctuations.</p>
+    </div>
+    <div class="feature-card">
+        <div class="feature-icon">📱</div>
+        <h3>Motion Detection</h3>
+        <p>Phone accelerometer triggers on movement — catch unseen activity.</p>
+    </div>
+    <div class="feature-card">
+        <div class="feature-icon">📷</div>
+        <h3>Evidence Log</h3>
+        <p>Snap photos, record sessions, organize case files with timestamps and metadata.</p>
+    </div>
+</section>
+{% endblock %}
