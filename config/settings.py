@@ -92,4 +92,10 @@ LOGIN_URL = 'accounts:login'
 LOGIN_REDIRECT_URL = 'investigator:dashboard'
 LOGOUT_REDIRECT_URL = 'investigator:home'
 
+CSRF_TRUSTED_ORIGINS = ['https://paranormal.jays-web.org']
+CSRF_COOKIE_SECURE = True
+CSRF_COOKIE_SAMESITE = 'Lax'
+SESSION_COOKIE_SECURE = True
+SESSION_COOKIE_SAMESITE = 'Lax'
+
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
